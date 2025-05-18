@@ -234,7 +234,7 @@ onMounted(async function () {
   }
   uuid.value=localStorage.getItem('authToken')
   username.value=localStorage.getItem('username')
-  projectTitle.value=path.value.slice(username.value.length+1)
+  projectTitle.value=decodeURI(path.value.slice(username.value.length+1))
   const resp = await fetch(`${backendUrl}/api/list?uuid=${encodeURIComponent(uuid.value)}&project=${encodeURIComponent(projectTitle.value)}`)
   for (var i of (await resp.json())) {
     if (i.endsWith('.mod')||i.endsWith('.csv')) {

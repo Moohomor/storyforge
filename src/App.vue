@@ -81,6 +81,7 @@ async function logout() {
       <a class="navbar-brand" href="#/">Story Forge</a>
       <a class="nav-link" href="#/">Истории</a>
       <a class="nav-link" href="#/my">Мои проекты</a>
+      <a class="nav-link" href="https://github.com/moohomor/storyforge/wiki">Помогите</a>
       <a class="nav-link" :href="username!=''?'#/me':'#/auth'"><span v-if="loadingAuth" class="spinner-border spinner-border-sm" aria-hidden="true"></span>{{username||"Аккаунт"}}</a>
       <button class="nav-link" v-if="username!=''" :disabled="logoutLoading" @click="logout">{{logoutLoading?'Выходим...':'Выйти'}}</button>
     </div>

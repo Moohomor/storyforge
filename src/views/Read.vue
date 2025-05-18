@@ -89,7 +89,7 @@ function nextLine() {
             vars['Engine.text'] = line.slice(3)
         else if (line.startsWith('char'))
             // current.char=line.slice(5)
-            vars['Engine.char'] = line.slice(3)
+            vars['Engine.char'] = line.slice(5)
         else if (line.startsWith('bg'))
             vars['Engine.bg_name']=line.slice('3')
         else if (line.startsWith('goto')) {
@@ -136,7 +136,7 @@ function toggleFullscreen() {
     isFullscreen.value = !isFullscreen.value;
 }
 onMounted(async function () {
-    path.value=window.location.hash.slice(7)
+    path.value=decodeURI(window.location.hash.slice(7))
     const err = await loadModules()
     if (err) {
         current.tx = err
@@ -160,7 +160,7 @@ onMounted(async function () {
     <button class="btn btn-light fullscreen-btn" @click="toggleFullscreen">
         {{ isFullscreen ? "Выйти из полноэкранного" : "Полноэкранный режим" }}
     </button>
-    <main v-if="state==null" class="read-background" :style="{ background: `url(${backendUrl}/api/read_public?file=${path}/${vars['Engine.bg_name']})`,'background-size':'100% 100%' }" @click="nextLine">
+    <main v-if="state==null" class="read-background" :style="{ background: `url(${backendUrl}/api/read_public?file=${encodeURIComponent(path)}/${encodeURIComponent(vars['Engine.bg_name'])})`,'background-size':'100% 100%' }" @click="nextLine">
         <div class="dialogue-box" :style="background-color" v-if="vars['Engine.text']||vars['Engine.char']">
             <div v-if="vars['Engine.char']" class="character-name">{{ vars['Engine.char'] }}</div>
             <span v-if="loadingMods" class="spinner-grow mx-2" role="status"></span>
