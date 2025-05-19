@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup>
 import { ref, nextTick, onMounted, computed } from 'vue'
 const backendUrl = import.meta.env.VITE_BACKEND_URL
 

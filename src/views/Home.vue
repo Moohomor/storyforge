@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup>
 import { ref, onMounted } from "vue"
 import PostCard from "../components/PostCard.vue"
 const loadingPosts = ref(true)
@@ -24,7 +24,10 @@ onMounted(async ()=>{
 <template>
 	<main>
 		<main class="container">
-			<h1>Истории<span v-if="loadingPosts" class="spinner-border mx-3" role="status"></span></h1>
+			<div class="container d-flex justify-content-between">
+				<h1>Истории<span v-if="loadingPosts" class="spinner-border mx-3" role="status"></span></h1>
+				<a class="btn btn-light" href="/app-qr.jpeg" role="button">Android-приложение</a>
+			</div>
 			<br>
 			<div class="row">
 				<PostCard v-for="(post, i) in posts" :key="i" :post="post" :link="'read'" :params="''" />

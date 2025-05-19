@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup>
 import PostCard from "../components/PostCard.vue"
 const backendUrl = import.meta.env.VITE_BACKEND_URL
 import { ref, computed, reactive, onMounted } from 'vue'
@@ -45,12 +45,12 @@ onMounted(async function () {
 	<br>
 	<div class="row">
 		<PostCard v-for="(project, i) in projects" :key="i" :post="project" :link="'edit'" :params="`uuid=${uuid}`" />
-		<button
+		<!-- <button
 		v-if="total_posts > projects.length" 
 		@click="console.log('boop')"
 		class="card btn btn-outline-dark btn-lg mt-4">
 		Load more
-		</button>
+		</button> -->
 	</div>
 </main>
 </template>

@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup>
 import { ref, computed, onMounted } from 'vue'
 import Home from './views/Home.vue'
 import Own from './views/Own.vue'

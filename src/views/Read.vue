@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup>
 import { ref, computed, reactive, onMounted } from 'vue'
 import Choice from "../components/Choice.vue"
 const backendUrl = import.meta.env.VITE_BACKEND_URL
@@ -139,7 +139,7 @@ onMounted(async function () {
     path.value=decodeURI(window.location.hash.slice(7))
     const err = await loadModules()
     if (err) {
-        current.tx = err
+        vars['Engine.text'] = err
         return
     }
     const json_data = localStorage.getItem('autosave_'+path.value)
@@ -161,7 +161,7 @@ onMounted(async function () {
         {{ isFullscreen ? "Выйти из полноэкранного" : "Полноэкранный режим" }}
     </button>
     <main v-if="state==null" class="read-background" :style="{ background: `url(${backendUrl}/api/read_public?file=${encodeURIComponent(path)}/${encodeURIComponent(vars['Engine.bg_name'])})`,'background-size':'100% 100%' }" @click="nextLine">
-        <div class="dialogue-box" :style="background-color" v-if="vars['Engine.text']||vars['Engine.char']">
+        <div class="dialogue-box" v-if="vars['Engine.text']||vars['Engine.char']">
             <div v-if="vars['Engine.char']" class="character-name">{{ vars['Engine.char'] }}</div>
             <span v-if="loadingMods" class="spinner-grow mx-2" role="status"></span>
             <div>{{ vars['Engine.text'] }}</div>
