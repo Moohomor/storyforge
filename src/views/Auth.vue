@@ -54,6 +54,7 @@ async function register() {
   registerSuccess.value = ''
   registerLoading.value = true
   try {
+    registerForm.username = registerForm.username.replace(' ','-')
     const response = await fetch(
       `${backendUrl}/auth/signup?name=${encodeURIComponent(registerForm.username)}&password=${encodeURIComponent(registerForm.password)}`,
       { method: 'POST' }
@@ -61,7 +62,7 @@ async function register() {
     if (response.ok) {
       const data = await response.json()
       localStorage.setItem('authToken', data.token)
-      localStorage.setItem('username', loginForm.username)
+      localStorage.setItem('username', registerForm.username)
       window.location.href = '/#'
     }
      else if (response.status === 409) {
