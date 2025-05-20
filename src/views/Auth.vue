@@ -59,6 +59,7 @@ async function register() {
       { method: 'POST' }
     )
     if (response.ok) {
+      const data = await response.json()
       localStorage.setItem('authToken', data.token)
       localStorage.setItem('username', loginForm.username)
       window.location.href = '/#'
