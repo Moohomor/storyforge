@@ -4,6 +4,7 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL
 
 const loadingList = ref(true)
 const loadingPublish = ref(false)
+const loadingAi = ref(false)
 const projectTitle = ref('')
 const username = ref('')
 const uuid = ref('')
@@ -12,6 +13,8 @@ const fileContents = ref({})
 const path = ref(window.location.hash.slice(7,window.location.hash.length-42))
 const currentFile = ref(files.value[0])
 const editor = ref(null)
+const ai_input = ref(null)
+const ai_response = ref('Да, я свободен!')
 const highlightInput = ref('')
 const highlightWords = ['tx','char', 'bg','if','else','endif','loop','endloop','choice']
 let currentPos=0
@@ -226,6 +229,19 @@ const publish = async () => {
   alert('Проект опубликован')
 }
 
+async function ai_confirm(event) {
+  if (event.key!=='Enter')
+    return
+  loadingAi.value=true
+  const response = await fetch(`${backendUrl}/api/gpt`, { method: 'PUT', body: `Пользователь делает игру на языке Story Forge и спрашивает:\n${ai_input.value.value}Модули, написанные им:${JSON.stringify(fileContents.value)}` })
+  if (response.ok) {
+    const data = await response.json()
+    console.log(data)
+    loadingAi.value=false
+    ai_response.value = data.content + `\n\n(${data.time_elapsed}s elapsed)`
+  }
+}
+
 // Автоматически загружаем первый файл
 onMounted(async function () {
   if (!(await authorized())) {
@@ -296,6 +312,17 @@ onMounted(async function () {
           @input="onInput"
           style="white-space: pre-wrap; overflow-wrap: break-word;"
         ></div>
+
+        <input
+          ref="ai_input"
+          class="form-control mt-5 mb-2"
+          type="message"
+          placeholder="Спросить у ИИ"
+          @keydown="ai_confirm"
+          style="white-space: pre-wrap; overflow-wrap: break-word;"
+        ></input>
+        <span v-if="loadingAi" class="spinner-border mx-2" role="status"></span>
+        <div style="white-space: pre-wrap; overflow-wrap: break-word;" v-else><p>{{ai_response}}</p></div>
       </div>
     </div>
   </div>

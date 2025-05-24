@@ -37,7 +37,7 @@ onMounted(async ()=>{
 				class="card btn btn-outline-dark btn-lg mt-4">
 				Load more
 			</button>
-			<h1 v-else><br>Всё просмотрено о_О</h1>
+			<h1 v-else v-if="!loadingPosts"><br>Всё просмотрено о_О</h1>
 			</div>
 		</main>
 	</main>
