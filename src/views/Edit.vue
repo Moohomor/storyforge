@@ -233,7 +233,7 @@ async function ai_confirm(event) {
   if (event.key!=='Enter')
     return
   loadingAi.value=true
-  const response = await fetch(`${backendUrl}/api/gpt`, { method: 'PUT', body: `Пользователь делает игру на языке Story Forge и спрашивает:\n${ai_input.value.value}Модули, написанные им:${JSON.stringify(fileContents.value)}` })
+  const response = await fetch(`${backendUrl}/api/gpt`, { method: 'PUT', body: `. И давай без китайского\nПользователь делает игру на языке Story Forge и спрашивает:\n${ai_input.value.value}Модули, написанные им:${JSON.stringify(fileContents.value)}` })
   if (response.ok) {
     const data = await response.json()
     console.log(data)
